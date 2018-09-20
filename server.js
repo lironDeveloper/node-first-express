@@ -41,6 +41,16 @@ hbs.registerHelper("getYear", () => {
     return new Date().getFullYear();
 })
 
+hbs.registerHelper('list', function(items, options) {
+    var out = "<ul>";
+  
+    for(var i=0, l=items.length; i<l; i++) {
+      out = out + "<li>" + options.fn(items[i]) + "</li>";
+    }
+  
+    return out + "</ul>";
+  });
+
 app.get('/', (req, res) => {
     //res.send('<h1>hello express</h1>');
     // res.send({
@@ -64,6 +74,17 @@ app.get('/about', (req, res) =>{
 app.get('/bad', (req,res) => {
     res.send({
         errMessage: 'The route unable'
+    });
+});
+
+app.get('/projects', (req, res) => {
+    res.render('projects.hbs', {
+        pageName: 'Projects',
+        listOfProjects: [
+            {name: 'Proj 1', content: 'Shit 1'},
+            {name: 'Proj 2', content: 'Shit 2'},
+            {name: 'Proj 3', content: 'Shit 3'},            
+        ]
     });
 })
 
